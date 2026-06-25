@@ -1,6 +1,6 @@
 # Toxicidade e Inclinação Política em Dois Registros da Linguagem Brasileira
 
-Projeto de **Deep Learning para Demandas Reais** — Atividade Prática.
+Projeto de **Deep Learning para Demandas Reais**, Atividade Prática.
 
 Análise computacional comparada da linguagem política brasileira em **dois registros**:
 toxicidade no discurso **cidadão/informal** (tweets) e inclinação ideológica no discurso
@@ -14,7 +14,7 @@ toxicidade no discurso **cidadão/informal** (tweets) e inclinação ideológica
 > Pré-requisito: **Python 3** instalado no Windows. (Detalhes completos na Seção 3.)
 
 1. Abra a pasta `analise-toxicidade-inclinicao-politica` e dê **duplo-clique em `Iniciar_demo.bat`**
-   (na 1ª vez ele cria o ambiente e instala as dependências — alguns minutos).
+   (na 1ª vez ele cria o ambiente e instala as dependências, alguns minutos).
 2. Vão abrir a janela **"Servidor de Modelos (NAO FECHE)"** e a página no Chrome. **Deixe a janela do servidor aberta.**
 3. Na página, **role até "Analisador"**; deve aparecer o selo verde **"Modelo real conectado"**.
 4. Digite um texto e clique em **Analisar**. A toxicidade mostra **"modelo rede neural"** (modelo real).
@@ -60,16 +60,16 @@ Para encerrar: feche a janela "Servidor de Modelos".
 | Δ (multi − single) | −1,9 p.p. | +4,0 p.p. |
 
 Três achados metodológicos: (a) na toxicidade o **BERT vence** com folga; (b) na política, a
-**truncagem** era o gargalo — o janelamento recupera o BERTimbau; (c) a transferência entre
+**truncagem** era o gargalo, o janelamento recupera o BERTimbau; (c) a transferência entre
 registros é **assimétrica** (negativa na toxicidade, positiva na política). Detalhes na
 `DOCUMENTACAO_TECNICA.docx`. (Durante o desenvolvimento, descobrimos e corrigimos um **vazamento
-de rótulo** na frente política — a sigla do partido no cabeçalho do discurso inflava o resultado.)
+de rótulo** na frente política, a sigla do partido no cabeçalho do discurso inflava o resultado.)
 
 ---
 
 ## 3. Como executar a PÁGINA WEB com os modelos reais (passo a passo)
 
-A página (`site_projeto.html`) não roda os modelos sozinha — quem os carrega e responde é um
+A página (`site_projeto.html`) não roda os modelos sozinha, quem os carrega e responde é um
 servidor local (`app.py`). O atalho `Iniciar_demo.bat` cuida de tudo.
 
 ### Pré-requisito
@@ -78,17 +78,17 @@ servidor local (`app.py`). O atalho `Iniciar_demo.bat` cuida de tudo.
 ### Passos
 1. Abra a pasta `analise-toxicidade-inclinicao-politica`.
 2. Dê **duplo-clique em `Iniciar_demo.bat`**. Na **primeira vez** ele cria um ambiente virtual
-   isolado (`.venv`) e instala as dependências (flask, scikit-learn, joblib) — leva alguns minutos.
+   isolado (`.venv`) e instala as dependências (flask, scikit-learn, joblib), leva alguns minutos.
    Nas próximas vezes é quase imediato.
 3. Vão abrir uma janela preta **"Servidor de Modelos (NAO FECHE)"** e a página no Chrome.
-   **Deixe a janela do servidor aberta** — é ela que mantém os modelos no ar.
+   **Deixe a janela do servidor aberta**, é ela que mantém os modelos no ar.
 4. Na página, **role até "Analisador"**. Se aparecer o selo verde **"Modelo real conectado"**,
    está tudo certo. Digite um texto e clique em **Analisar**.
    - Toxicidade: mostra **"modelo rede neural"** (ou "modelo BERT") → modelo real respondendo.
    - Se mostrar "Servidor offline", espere uns segundos e aperte **Ctrl+F5**.
 5. Para **encerrar**: feche a janela "Servidor de Modelos".
 
-### Ativar também o modelo de INCLINAÇÃO (BERTimbau) — opcional
+### Ativar também o modelo de INCLINAÇÃO (BERTimbau), opcional
 Por padrão a inclinação usa uma heurística. Para usar o modelo real:
 
 1. Rode o notebook **`treinar_bertimbau_colab.ipynb`** no Google Colab (com GPU). A última célula
@@ -104,7 +104,7 @@ Por padrão a inclinação usa uma heurística. Para usar o modelo real:
    passa a exibir **"modelo BERTimbau"**.
 
 > Observação honesta: o BERTimbau foi treinado em **discursos longos**; em frases curtas ele pode
-> errar ou ficar inseguro — mas analisa o sentido (contexto/negação), não conta palavras.
+> errar ou ficar inseguro, mas analisa o sentido (contexto/negação), não conta palavras.
 
 ---
 
@@ -122,8 +122,7 @@ python treinar_rede_neural.py
 ```
 
 Saída: o modelo `.joblib`, as figuras (curva de loss, matriz de confusão) e as métricas.
-As versões usadas no desenvolvimento estão fixadas em **`requirements_treino.txt`** (Python 3.13)
-— use-o para reproduzir o mesmo ambiente.
+As versões usadas no desenvolvimento estão fixadas em **`requirements_treino.txt`** (Python 3.13), use-o para reproduzir o mesmo ambiente.
 
 > **Artefatos pesados não estão versionados.** Por ultrapassarem o limite de 100 MB do GitHub,
 > a pasta `modelo_bertimbau_politica/` (e o `.zip` correspondente, com os pesos `model.safetensors`)
@@ -131,7 +130,7 @@ As versões usadas no desenvolvimento estão fixadas em **`requirements_treino.t
 > `treinar_bertimbau_colab.ipynb` no Colab (a última célula baixa o `.zip`) e descompacte-o ao lado
 > do `app.py`. A rede neural de toxicidade (`modelo_rede_neural.joblib`, leve) **está** versionada.
 
-### Modelos BERT (Google Colab, GPU) — os mesmos 4 passos para os 4 notebooks
+### Modelos BERT (Google Colab, GPU), os mesmos 4 passos para os 4 notebooks
 
 1. Abra o notebook no [Google Colab](https://colab.research.google.com).
 2. `Ambiente de execução → Alterar o tipo de ambiente de execução → GPU`.
@@ -140,8 +139,8 @@ As versões usadas no desenvolvimento estão fixadas em **`requirements_treino.t
 
 | Notebook | Treina | Saída principal |
 |---|---|---|
-| `treinar_bert_colab.ipynb` | BERT (BERTabaporu) — toxicidade | métricas + figuras |
-| `treinar_bertimbau_colab.ipynb` | BERTimbau — inclinação (coleta + treina) | `modelo_bertimbau_politica.zip` (usado pela página) |
+| `treinar_bert_colab.ipynb` | BERT (BERTabaporu), toxicidade | métricas + figuras |
+| `treinar_bertimbau_colab.ipynb` | BERTimbau, inclinação (coleta + treina) | `modelo_bertimbau_politica.zip` (usado pela página) |
 | `treinar_bertimbau_janelamento_colab.ipynb` | BERTimbau + janelamento | métricas + figuras |
 | `treinar_multitask_colab.ipynb` | Multi-task (encoder compartilhado) | comparação single vs multi |
 
@@ -153,7 +152,7 @@ inclinação) e limpeza de texto (remoção do cabeçalho com a sigla do partido
 ## 🔭 Próximos passos / Como continuar este trabalho
 
 > Esta seção é para quem pega o repositório para **dar continuidade** (ex.: próxima turma de
-> Tópicos Especiais de Programação — TADS). O *porquê* de cada decisão está nas `etapas/` e na
+> Tópicos Especiais de Programação, TADS). O *porquê* de cada decisão está nas `etapas/` e na
 > `DOCUMENTACAO_TECNICA.docx` (Seção 10 traz limitações e trabalhos futuros em detalhe).
 
 **Por onde começar (em ordem de esforço/retorno):**
@@ -163,7 +162,7 @@ inclinação) e limpeza de texto (remoção do cabeçalho com a sigla do partido
    de `demo_inferencia.py` para dentro do `app.py` é a melhoria de maior impacto e menor risco.
 2. **Mais dados rotulados para a inclinação.** O rótulo atual vem do partido do deputado (supervisão
    distante, com ruído). Anotação por fala, ou uma classe **"neutro/other"**, tende a melhorar a
-   qualidade — e permite reavaliar o multi-task com base maior.
+   qualidade, e permite reavaliar o multi-task com base maior.
 3. **Confirmar a transferência assimétrica.** O achado (compartilhar encoder **piora** toxicidade e
    **melhora** política) saiu de um único experimento. Repetir com mais dados, variando o encoder
    compartilhado e o esquema de amostragem, fecharia H2/H3 com mais segurança.
@@ -184,7 +183,7 @@ inclinação) e limpeza de texto (remoção do cabeçalho com a sigla do partido
 
 **Antes de continuar:** instale o ambiente de treino com `pip install -r requirements_treino.txt`
 e lembre que os pesos pesados do BERTimbau **não estão no repositório** (veja o aviso na seção de
-treino acima — recrie pelo Colab).
+treino acima, recrie pelo Colab).
 
 ---
 
@@ -211,7 +210,7 @@ treino acima — recrie pelo Colab).
 | Arquivo | O que é |
 |---|---|
 | `modelo_rede_neural.joblib` | Rede neural de **toxicidade** já treinada (pronta para uso) |
-| `modelo_bertimbau_politica/` | Pasta do BERTimbau de **inclinação** (baixar do Colab — opcional) |
+| `modelo_bertimbau_politica/` | Pasta do BERTimbau de **inclinação** (baixar do Colab, opcional) |
 | `mapeamento_partidos_ideologia.csv` | Tabela partido → ideologia (esquerda/direita) |
 | `figuras/` | Gráficos e métricas (matriz de confusão, ROC, curva de loss, JSONs de resultado) |
 | `Bert_bertimbau/` | Saídas brutas baixadas do Colab (discursos, figuras, resultados) |
@@ -228,10 +227,10 @@ treino acima — recrie pelo Colab).
 ### Notebooks do Google Colab (treino com GPU)
 | Notebook | O que treina |
 |---|---|
-| `treinar_bert_colab.ipynb` | **BERT (BERTabaporu)** para **toxicidade** — baixa o ToLD-Br, treina, avalia e salva |
-| `treinar_bertimbau_colab.ipynb` | **BERTimbau** para **inclinação** (truncado em 256 tokens) — coleta os discursos da Câmara, limpa, treina e **salva a pasta `modelo_bertimbau_politica`** usada pela página |
-| `treinar_bertimbau_janelamento_colab.ipynb` | **BERTimbau + janelamento** — lê o **documento inteiro** (fatiando em janelas); recupera o desempenho (0,77) |
-| `treinar_multitask_colab.ipynb` | **Multi-task** — um encoder compartilhado com duas cabeças; compara single-task vs multi-task (H2/H3) |
+| `treinar_bert_colab.ipynb` | **BERT (BERTabaporu)** para **toxicidade**, baixa o ToLD-Br, treina, avalia e salva |
+| `treinar_bertimbau_colab.ipynb` | **BERTimbau** para **inclinação** (truncado em 256 tokens), coleta os discursos da Câmara, limpa, treina e **salva a pasta `modelo_bertimbau_politica`** usada pela página |
+| `treinar_bertimbau_janelamento_colab.ipynb` | **BERTimbau + janelamento**, lê o **documento inteiro** (fatiando em janelas); recupera o desempenho (0,77) |
+| `treinar_multitask_colab.ipynb` | **Multi-task**, um encoder compartilhado com duas cabeças; compara single-task vs multi-task (H2/H3) |
 
 > Para a **página web**, o notebook relevante é o `treinar_bertimbau_colab.ipynb`, pois é ele que
 > gera a pasta com o nome exato (`modelo_bertimbau_politica`) que o `app.py` carrega.
@@ -246,7 +245,7 @@ treino acima — recrie pelo Colab).
 | **Discursos da Câmara** | Inclinação | [dadosabertos.camara.leg.br](https://dadosabertos.camara.leg.br) | Dados públicos |
 
 > O UStanceBR (proposta inicial) foi descartado por ser distribuído só como IDs de tweets, sem
-> texto — inviável de reidratar de forma reprodutível. Detalhes na Seção 3 da documentação.
+> texto, inviável de reidratar de forma reprodutível. Detalhes na Seção 3 da documentação.
 
 ---
 
@@ -257,6 +256,4 @@ numpy; matplotlib; Flask (servidor da página); HTML/CSS/JavaScript (página web
 
 ## 7. Ética e uso responsável
 
-Ferramenta de apoio com **humano no circuito**, análise em **nível agregado**, e cada modelo
-aplicado **apenas ao registro** para o qual foi treinado. O modelo de inclinação opera sobre
-**discurso público de agentes públicos**, nunca inferindo ideologia de cidadãos.
+Ferramenta de a
