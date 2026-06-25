@@ -117,11 +117,19 @@ modelos **BERT/BERTimbau** treinam no **Google Colab** com GPU gratuita.
 
 ```bash
 git clone https://github.com/JAugusto97/ToLD-Br.git
-pip install scikit-learn pandas numpy matplotlib joblib
+pip install -r requirements_treino.txt
 python treinar_rede_neural.py
 ```
 
 Saída: o modelo `.joblib`, as figuras (curva de loss, matriz de confusão) e as métricas.
+As versões usadas no desenvolvimento estão fixadas em **`requirements_treino.txt`** (Python 3.13)
+— use-o para reproduzir o mesmo ambiente.
+
+> ⚠️ **Artefatos pesados não estão versionados.** Por ultrapassarem o limite de 100 MB do GitHub,
+> a pasta `modelo_bertimbau_politica/` (e o `.zip` correspondente, com os pesos `model.safetensors`)
+> estão no `.gitignore` e **não vêm no clone**. Para recriá-los, rode o notebook
+> `treinar_bertimbau_colab.ipynb` no Colab (a última célula baixa o `.zip`) e descompacte-o ao lado
+> do `app.py`. A rede neural de toxicidade (`modelo_rede_neural.joblib`, leve) **está** versionada.
 
 ### Modelos BERT (Google Colab, GPU) — os mesmos 4 passos para os 4 notebooks
 
@@ -139,6 +147,44 @@ Saída: o modelo `.joblib`, as figuras (curva de loss, matriz de confusão) e as
 
 Reprodutibilidade garantida: sementes fixas, *splits* documentados (split por deputado na
 inclinação) e limpeza de texto (remoção do cabeçalho com a sigla do partido).
+
+---
+
+## 🔭 Próximos passos / Como continuar este trabalho
+
+> Esta seção é para quem pega o repositório para **dar continuidade** (ex.: próxima turma de
+> Tópicos Especiais de Programação — TADS). O *porquê* de cada decisão está nas `etapas/` e na
+> `DOCUMENTACAO_TECNICA.docx` (Seção 10 traz limitações e trabalhos futuros em detalhe).
+
+**Por onde começar (em ordem de esforço/retorno):**
+
+1. **Servir o BERTimbau com janelamento na API.** Hoje o `app.py` trunca a inclinação em 256 tokens;
+   o janelamento (que recupera o macro-F1 de 0,73 → 0,77) só roda nos notebooks. Levar essa lógica
+   de `demo_inferencia.py` para dentro do `app.py` é a melhoria de maior impacto e menor risco.
+2. **Mais dados rotulados para a inclinação.** O rótulo atual vem do partido do deputado (supervisão
+   distante, com ruído). Anotação por fala, ou uma classe **"neutro/other"**, tende a melhorar a
+   qualidade — e permite reavaliar o multi-task com base maior.
+3. **Confirmar a transferência assimétrica.** O achado (compartilhar encoder **piora** toxicidade e
+   **melhora** política) saiu de um único experimento. Repetir com mais dados, variando o encoder
+   compartilhado e o esquema de amostragem, fecharia H2/H3 com mais segurança.
+4. **Calibração e limiar por custo de erro.** Ajustar probabilidades e o limiar de decisão conforme
+   o custo de falso-positivo/negativo na moderação.
+5. **Auditoria de viés/justiça na toxicidade.** Risco conhecido: sobre-marcação de dialetos
+   minoritários e termos reapropriados. Avaliar por subgrupo antes de qualquer uso real.
+6. **Empacotamento para produção.** Conteinerizar (Docker) o `app.py` + modelos e adicionar
+   monitoramento de *drift* para uma implantação de verdade.
+
+**Mapa rápido para se localizar no código:**
+
+- Treino reprodutível → `treinar_rede_neural.py` (local) e os 4 notebooks `treinar_*_colab.ipynb`.
+- Coleta dos discursos → `coletar_discursos_camara.py` (API de dados abertos da Câmara).
+- Inferência com janelamento → `demo_inferencia.py` (a lógica a portar para o `app.py`).
+- Pipeline de referência (esqueleto comentado das decisões das Etapas 4 e 5) → `pipeline.py`.
+- Métricas e figuras de cada modelo → `figuras/` (JSONs `resultados_*.json` + PNGs).
+
+**Antes de continuar:** instale o ambiente de treino com `pip install -r requirements_treino.txt`
+e lembre que os pesos pesados do BERTimbau **não estão no repositório** (veja o aviso na seção de
+treino acima — recrie pelo Colab).
 
 ---
 
@@ -174,6 +220,7 @@ inclinação) e limpeza de texto (remoção do cabeçalho com a sigla do partido
 | Arquivo | O que é |
 |---|---|
 | `treinar_rede_neural.py` | Treina a rede neural de toxicidade (TF-IDF → SVD → MLP) |
+| `requirements_treino.txt` | Dependências (com versões fixadas) para **retreinar** os modelos |
 | `pipeline.py` | Pipeline de treino/avaliação dos modelos (esqueleto) |
 | `demo_inferencia.py` | Inferência sobre texto novo (com janelamento para texto longo) |
 | `coletar_discursos_camara.py` | Coleta reprodutível dos discursos da Câmara (API de dados abertos) |

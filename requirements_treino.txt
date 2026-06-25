@@ -1,0 +1,17 @@
+# Dependencias para (RE)TREINAR os modelos localmente.
+# (Para apenas RODAR a pagina/servidor, use requirements_api.txt.)
+#
+# Versoes fixadas = as efetivamente usadas no desenvolvimento (Python 3.13).
+# Instale com:  pip install -r requirements_treino.txt
+#
+# --- Rede neural de toxicidade (treinar_rede_neural.py): ---
+scikit-learn==1.9.0
+numpy==2.5.0
+scipy==1.18.0
+pandas==2.2.3
+matplotlib==3.9.2
+joblib==1.5.3
+#
+# --- BERT / BERTimbau (so se for treinar FORA do Colab; no Colab ja vem instalado): ---
+# torch==2.12.1
+# transformers==5.12.1
