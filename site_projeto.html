@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linguagem Política BR — Toxicidade & Inclinação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/tabler-icons.min.css">
+<style>
+  :root{
+    --bg:#fbfaf8; --bg0:#ffffff; --bg1:#f3f2ee; --bg2:#e9e8e2;
+    --ink:#16151a; --tx0:#23222a; --tx1:#605f6b; --tx2:#908f9c;
+    --accent:#5b4bdb; --accent2:#8a63e8; --accent-soft:#efedfd; --accent-ink:#3a2fa0;
+    --tox:#c0392b; --tox-soft:#fceae7; --ok:#0f9d72; --ok-ink:#0c6e52;
+    --warn:#b9821a; --blue:#2f6fd0; --blue-soft:#e9f1fc;
+    --bd:rgba(20,18,40,.09); --bd2:rgba(20,18,40,.16);
+    --r:14px; --r-sm:10px; --r-lg:20px; --r-xl:26px;
+    --sh:0 1px 2px rgba(20,18,40,.04), 0 8px 24px rgba(20,18,40,.06);
+    --sh-lg:0 2px 6px rgba(20,18,40,.06), 0 18px 50px rgba(20,18,40,.10);
+    --font:'Inter',-apple-system,"Segoe UI",Roboto,sans-serif;
+    --serif:'Newsreader',Georgia,serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--font);color:var(--tx0);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent);text-decoration:none;}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 22px;}
+  .kicker{font-size:12px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:var(--accent);}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:30;background:rgba(251,250,248,.72);backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s;}
+  nav.scrolled{border-color:var(--bd);box-shadow:0 4px 20px rgba(20,18,40,.04);}
+  nav .wrap{display:flex;align-items:center;gap:18px;height:62px;}
+  .brand{font-weight:600;font-size:15.5px;display:flex;align-items:center;gap:9px;}
+  .brand .dot{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap;}
+  .links a{color:var(--tx1);font-size:14px;font-weight:500;padding:7px 12px;border-radius:9px;transition:.15s;}
+  .links a:hover{color:var(--ink);background:var(--bg1);}
+  @media(max-width:680px){.links{display:none;}}
+
+  /* hero */
+  header.hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#241d5e 0%,#4a37b8 48%,#6a4bd6 100%);color:#fff;padding:84px 0 92px;}
+  header.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(900px 380px at 78% -10%,rgba(255,255,255,.18),transparent 60%),radial-gradient(620px 320px at 8% 120%,rgba(138,99,232,.45),transparent 55%);}
+  header.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(180deg,rgba(0,0,0,.6),transparent 75%);}
+  header.hero .wrap{position:relative;z-index:1;}
+  .tag{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:12.5px;font-weight:500;padding:6px 14px;border-radius:99px;backdrop-filter:blur(4px);}
+  h1{font-family:var(--serif);font-size:46px;font-weight:500;line-height:1.1;letter-spacing:-.5px;margin:20px 0 16px;max-width:14ch;}
+  .hero p{font-size:18px;color:rgba(255,255,255,.84);max-width:600px;margin:0;}
+  .hero .cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
+  .btn{font:inherit;font-size:14.5px;font-weight:600;border-radius:11px;padding:12px 20px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:.16s;}
+  .btn-light{background:#fff;color:var(--accent-ink);}
+  .btn-light:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(0,0,0,.18);}
+  .btn-ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.28);}
+  .btn-ghost:hover{background:rgba(255,255,255,.16);}
+  .hero-stats{display:flex;gap:30px;margin-top:40px;flex-wrap:wrap;}
+  .hero-stats div{color:#fff;}
+  .hero-stats b{font-family:var(--serif);font-size:26px;font-weight:500;display:block;}
+  .hero-stats span{font-size:13px;color:rgba(255,255,255,.7);}
+
+  /* sections */
+  section{padding:64px 0;}
+  section.alt{background:var(--bg0);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);}
+  h2{font-family:var(--serif);font-size:30px;font-weight:500;margin:8px 0 8px;letter-spacing:-.3px;}
+  .lead{color:var(--tx1);font-size:16px;max-width:660px;margin:0 0 26px;}
+
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .card{background:var(--bg0);border:1px solid var(--bd);border-radius:var(--r-lg);padding:22px 24px;box-shadow:var(--sh);transition:transform .18s,box-shadow .18s;}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--sh-lg);}
+  .card h3{font-size:17px;font-weight:600;margin:0 0 8px;display:flex;align-items:center;gap:10px;}
+  .card p{font-size:14.5px;color:var(--tx1);margin:0;}
+  .ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;}
+  .chip{font-size:12px;color:var(--tx1);background:var(--bg1);border-radius:99px;padding:4px 11px;font-weight:500;}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+
+  /* analisador */
+  .tool{background:var(--bg0);border:1px solid var(--bd);border-radius:var(--r-xl);padding:26px;box-shadow:var(--sh-lg);}
+  textarea{width:100%;resize:vertical;font:inherit;font-size:15.5px;line-height:1.6;padding:14px 16px;border:1px solid var(--bd2);border-radius:var(--r);background:var(--bg);transition:.15s;}
+  textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);background:#fff;}
+  .toolrow{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px;align-items:center;}
+  button{font:inherit;}
+  .b{font-size:14px;font-weight:500;background:var(--bg0);border:1px solid var(--bd2);border-radius:11px;padding:10px 15px;cursor:pointer;color:var(--tx0);display:inline-flex;align-items:center;gap:7px;transition:.15s;}
+  .b:hover{background:var(--bg1);border-color:var(--bd2);}
+  .b.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:transparent;font-weight:600;box-shadow:0 6px 16px rgba(91,75,219,.28);}
+  .b.primary:hover{transform:translateY(-1px);filter:brightness(1.05);}
+  .results{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px;}
+  @media(max-width:600px){.results{grid-template-columns:1fr;}}
+  .res{position:relative;border:1px solid var(--bd);border-radius:var(--r);padding:18px 20px;background:var(--bg0);overflow:hidden;}
+  .res::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--tx2);}
+  .res.tox::before{background:var(--tox);} .res.pol::before{background:var(--blue);}
+  .res .head{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:600;}
+  .res .head .reg{font-size:11px;color:var(--tx2);margin-left:auto;font-weight:500;background:var(--bg1);padding:3px 9px;border-radius:99px;}
+  .res .lbl{font-size:25px;font-weight:600;margin:12px 0 10px;letter-spacing:-.3px;}
+  .bar{height:9px;background:var(--bg2);border-radius:99px;overflow:hidden;}
+  .bar>div{height:100%;width:0;background:var(--tx2);border-radius:99px;transition:width .45s cubic-bezier(.2,.7,.2,1);}
+  .muted{font-size:13px;color:var(--tx1);margin:9px 0 0;}
+  .fit{font-size:12.5px;margin:10px 0 0;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:99px;font-weight:500;}
+  .fit.ok{color:var(--ok-ink);background:#e7f7f1;} .fit.no{color:var(--warn);background:#fbf1de;}
+  .note{font-size:12.5px;color:var(--tx2);margin-top:16px;line-height:1.6;display:flex;gap:7px;}
+
+  /* tabela */
+  .tablecard{background:var(--bg0);border:1px solid var(--bd);border-radius:var(--r-lg);box-shadow:var(--sh);overflow:hidden;}
+  table.enc{width:100%;border-collapse:collapse;font-size:14.5px;}
+  table.enc th,table.enc td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--bd);vertical-align:top;}
+  table.enc tr:last-child td{border-bottom:none;}
+  table.enc th{color:var(--tx2);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;background:var(--bg1);}
+  table.enc tr:hover td{background:var(--bg);}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:var(--accent-soft);color:var(--accent-ink);padding:2px 7px;border-radius:6px;font-weight:500;}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+  .step{position:relative;background:var(--bg0);border:1px solid var(--bd);border-radius:var(--r);padding:20px;box-shadow:var(--sh);transition:.18s;}
+  .step:hover{transform:translateY(-3px);box-shadow:var(--sh-lg);}
+  .step .n{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .step h4{margin:0 0 5px;font-size:15.5px;font-weight:600;}
+  .step p{margin:0;font-size:13.5px;color:var(--tx1);}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.62);padding:40px 0 56px;font-size:13.5px;}
+  footer .wrap{display:flex;flex-direction:column;gap:10px;}
+  footer strong{color:#fff;font-weight:500;}
+  footer .fnote{font-size:12.5px;color:rgba(255,255,255,.42);line-height:1.6;max-width:760px;}
+
+  .reveal{animation:rv .6s ease both;}
+  .reveal.in{opacity:1;transform:none;}
+  @keyframes rv{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <span class="brand"><span class="dot"><i class="ti ti-messages"></i></span> Linguagem Política BR</span>
+    <span class="links">
+      <a href="#analisar">Analisar</a>
+      <a href="#registros">Registros</a>
+      <a href="#modelos">Modelos</a>
+      <a href="#metodologia">Metodologia</a>
+      <a href="#dados">Dados</a>
+    </span>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="tag"><i class="ti ti-brain"></i> Deep Learning · PLN · Português</span>
+    <h1>Toxicidade e inclinação política em dois registros</h1>
+    <p>Um sistema que lê o discurso cidadão (tweets) e o discurso institucional (Câmara) — e mede se modelos de linguagem realmente transferem entre esses dois mundos.</p>
+    <div class="cta">
+      <a href="#analisar" class="btn btn-light"><i class="ti ti-player-play"></i> Testar o analisador</a>
+      <a href="#metodologia" class="btn btn-ghost"><i class="ti ti-list-check"></i> Ver metodologia</a>
+    </div>
+    <div class="hero-stats">
+      <div><b>21.000</b><span>tweets anotados (ToLD-Br)</span></div>
+      <div><b>2</b><span>registros linguísticos</span></div>
+      <div><b>7</b><span>etapas documentadas</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="analisar" class="alt">
+  <div class="wrap reveal">
+    <span class="kicker">Demonstração</span>
+    <h2>Analisador</h2>
+    <p class="lead">Cole um texto. Cada frente é treinada para um registro — o selo indica qual predição é confiável para o texto que você inseriu.</p>
+    <div id="status-modelo" style="font-size:13px;margin:-10px 0 16px;"></div>
+    <div class="tool">
+      <textarea id="txt" rows="4" placeholder="Cole um tweet ou um trecho de discurso parlamentar..."></textarea>
+      <div class="toolrow">
+        <button class="b" id="ex1"><i class="ti ti-brand-twitter"></i> Exemplo: tweet</button>
+        <button class="b" id="ex2"><i class="ti ti-building-bank"></i> Exemplo: discurso</button>
+        <button class="b" id="clr"><i class="ti ti-eraser"></i> Limpar</button>
+        <button class="b primary" id="go" style="margin-left:auto;"><i class="ti ti-sparkles"></i> Analisar</button>
+      </div>
+      <div class="results">
+        <div class="res tox">
+          <div class="head"><i class="ti ti-message-report" style="color:var(--tox)"></i> Toxicidade <span class="reg">informal</span></div>
+          <p class="lbl" id="tox-label">—</p>
+          <div class="bar"><div id="tox-bar"></div></div>
+          <p class="muted" id="tox-conf">aguardando análise</p>
+          <span class="fit" id="tox-fit" style="display:none;"></span>
+        </div>
+        <div class="res pol">
+          <div class="head"><i class="ti ti-building-bank" style="color:var(--blue)"></i> Inclinação ideológica <span class="reg">formal</span></div>
+          <p class="lbl" id="pol-label">—</p>
+          <div class="bar"><div id="pol-bar"></div></div>
+          <p class="muted" id="pol-conf">aguardando análise</p>
+          <span class="fit" id="pol-fit" style="display:none;"></span>
+        </div>
+      </div>
+      <p class="note"><i class="ti ti-info-circle"></i><span>Demonstração ilustrativa da interface. As predições reais vêm dos modelos BERT treinados pelo <code>pipeline.py</code>; aqui uma heurística leve simula o fluxo e o comportamento de registro.</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="registros">
+  <div class="wrap reveal">
+    <span class="kicker">O problema</span>
+    <h2>Dois registros, dois fenômenos</h2>
+    <p class="lead">A esfera pública se expressa em registros muito diferentes. A distância entre eles não é um defeito do projeto — é o objeto de estudo.</p>
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="ico" style="background:var(--tox-soft);color:var(--tox)"><i class="ti ti-message-circle"></i></span> Discurso cidadão</h3>
+        <p>Tweets curtos e informais, com gíria, ironia e toxicidade. Tarefa: detectar conteúdo tóxico. Base: ToLD-Br, 21.000 tweets anotados.</p>
+        <div class="row" style="margin-top:14px;"><span class="chip">informal</span><span class="chip">curto</span><span class="chip">tóxico / não-tóxico</span></div>
+      </div>
+      <div class="card">
+        <h3><span class="ico" style="background:var(--blue-soft);color:var(--blue)"><i class="ti ti-building-bank"></i></span> Discurso institucional</h3>
+        <p>Discursos parlamentares longos e formais, com sinal ideológico difuso. Tarefa: classificar inclinação. Base: discursos da Câmara, rotulados por partido.</p>
+        <div class="row" style="margin-top:14px;"><span class="chip">formal</span><span class="chip">longo</span><span class="chip">esquerda / direita</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;border-left:4px solid var(--accent);border-radius:var(--r);">
+      <p style="color:var(--tx0);font-size:15.5px;"><strong style="color:var(--accent-ink)">Pergunta de pesquisa:</strong> representações aprendidas em um registro transferem para o outro? Um encoder compartilhado ajuda ou atrapalha? O analisador já antecipa a resposta com o selo de registro.</p>
+    </div>
+  </div>
+</section>
+
+<section id="modelos" class="alt">
+  <div class="wrap reveal">
+    <span class="kicker">A solução</span>
+    <h2>Modelos</h2>
+    <p class="lead">A decisão central: casar o codificador ao registro de cada tarefa. Não existe um único encoder ótimo para os dois — daí a hipótese de transferência negativa.</p>
+    <div class="tablecard">
+      <table class="enc">
+        <tr><th>Tarefa</th><th>Registro</th><th>Codificador</th><th>Por quê</th></tr>
+        <tr><td>Toxicidade</td><td>Tweets, informal</td><td><code>BERTabaporu</code></td><td>Pré-treinado em ~237 mi de tweets em português — mesmo domínio</td></tr>
+        <tr><td>Inclinação</td><td>Discurso, formal</td><td><code>BERTimbau</code></td><td>Pré-treinado em texto formal; <em>cased</em> preserva nomes e siglas</td></tr>
+        <tr><td>Multi-task</td><td>Compartilhado</td><td>Encoder único + 2 cabeças</td><td>Testa explicitamente a transferência entre registros</td></tr>
+      </table>
+    </div>
+    <div class="grid3" style="margin-top:16px;">
+      <div class="card"><h3 style="font-size:15px;"><i class="ti ti-scale" style="color:var(--accent)"></i> macro-F1</h3><p>Métrica primária, robusta ao desbalanceamento das classes.</p></div>
+      <div class="card"><h3 style="font-size:15px;"><i class="ti ti-users-group" style="color:var(--accent)"></i> split por deputado</h3><p>Evita que o modelo aprenda o estilo do autor e vaze identidade.</p></div>
+      <div class="card"><h3 style="font-size:15px;"><i class="ti ti-windmill" style="color:var(--accent)"></i> janelamento</h3><p>Discursos longos são fatiados em janelas e agregados por média.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="metodologia">
+  <div class="wrap reveal">
+    <span class="kicker">O percurso</span>
+    <h2>Metodologia — 7 etapas</h2>
+    <p class="lead">Da definição do problema à demonstração funcional, com justificativa técnica em cada decisão.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4>Definição do problema</h4><p>Dois fenômenos em dois registros e uma pergunta de transferência.</p></div>
+      <div class="step"><div class="n">2</div><h4>Objetivo da solução</h4><p>Classificar cada frente e medir transferência. Resultado negativo conta como sucesso.</p></div>
+      <div class="step"><div class="n">3</div><h4>Base de dados</h4><p>ToLD-Br + discursos da Câmara, abertos e reprodutíveis.</p></div>
+      <div class="step"><div class="n">4</div><h4>Modelagem</h4><p>Encoders casados ao registro; baselines + multi-task.</p></div>
+      <div class="step"><div class="n">5</div><h4>Avaliação</h4><p>macro-F1, split sem vazamento, significância estatística.</p></div>
+      <div class="step"><div class="n">6</div><h4>Aplicabilidade real</h4><p>Moderação assistida e análise de discurso, com ética.</p></div>
+      <div class="step"><div class="n">7</div><h4>Demonstração</h4><p>Pipeline executável e esta página interativa.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="dados" class="alt">
+  <div class="wrap reveal">
+    <span class="kicker">Transparência</span>
+    <h2>Dados e fontes</h2>
+    <div class="grid2">
+      <div class="card"><h3><span class="ico" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-database"></i></span> ToLD-Br</h3><p>Tweets em PT-BR anotados para toxicidade, sob CC BY-SA 4.0. Distribui o texto.</p><p style="margin-top:10px;"><a href="https://github.com/JAugusto97/ToLD-Br"><i class="ti ti-external-link" style="vertical-align:-2px"></i> github.com/JAugusto97/ToLD-Br</a></p></div>
+      <div class="card"><h3><span class="ico" style="background:var(--accent-soft);color:var(--accent)"><i class="ti ti-building"></i></span> Câmara dos Deputados</h3><p>Discursos públicos via API de dados abertos, rotulados por partido → ideologia.</p><p style="margin-top:10px;"><a href="https://dadosabertos.camara.leg.br"><i class="ti ti-external-link" style="vertical-align:-2px"></i> dadosabertos.camara.leg.br</a></p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <strong>Projeto de Deep Learning para demandas reais</strong>
+    Análise computacional comparada da linguagem política brasileira em dois registros.
+    <p class="fnote">Uso responsável: humano no circuito, análise em nível agregado, e cada modelo aplicado apenas ao registro para o qual foi treinado. O modelo de inclinação opera sobre discurso público de agentes públicos, nunca infere ideologia de cidadãos.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var TOX=["idiota","lixo","imbecil","otario","otário","burro","burra","vagabundo","merda","porra","escoria","escória","nojento","nojenta","ridiculo","ridículo","palhaco","palhaço","corrupto","ladrao","ladrão","cala a boca","seu lixo","bando de","verme"];
+  var ESQ=["trabalhador","trabalhadores","direitos","povo","social","desigualdade","publico","público","sus","democracia","minorias","assistencia","assistência","auxilio","auxílio","redistribui","dignidade"];
+  var DIR=["liberdade","familia","família","propriedade","imposto","impostos","privado","privatiza","ordem","mercado","tradicao","tradição","empreendedor","seguranca","segurança","estado minimo","estado inutil","estado inútil","livre mercado","patria","pátria","esquerdopata","esquerdopatas","comunista","comunistas","petralha","petralhas","mamata","parasita","parasitas","bandido","bandidos","vagabundo","vagabundos","roubar","rouba","roubam","inchar","cidadao de bem","cidadão de bem"];
+  function norm(s){return (s||"").toLowerCase();}
+  function count(s,a){var n=0;a.forEach(function(w){if(s.indexOf(w)>=0)n++;});return n;}
+  function setCard(id,label,conf,color){
+    document.getElementById(id+"-label").textContent=label;
+    var b=document.getElementById(id+"-bar");setTimeout(function(){b.style.width=Math.round(conf*100)+"%";},30);b.style.background=color;
+    document.getElementById(id+"-conf").textContent="confiança "+Math.round(conf*100)+"%";
+  }
+  function fit(id,ok,msg){
+    var el=document.getElementById(id+"-fit");el.style.display="inline-flex";
+    el.className="fit "+(ok?"ok":"no");
+    el.innerHTML='<i class="ti '+(ok?"ti-circle-check":"ti-alert-triangle")+'"></i> '+msg;
+  }
+  var API="http://127.0.0.1:5000";
+  function heuristicaTox(s){
+    var tox=count(s,TOX);var ehTox=tox>0;var pTox=Math.max(0.5,Math.min(0.97,0.5+tox*0.13));
+    setCard("tox",ehTox?"Tóxico":"Não-tóxico",ehTox?pTox:(1-(pTox-0.5)),ehTox?"#c0392b":"#0f9d72");
+    document.getElementById("tox-conf").textContent="confiança "+Math.round((ehTox?pTox:(1-(pTox-0.5)))*100)+"% · heurística";
+  }
+  function heuristicaPol(s){
+    var e=count(s,ESQ),d=count(s,DIR),tot=e+d;var dir=d>=e;
+    var pPol=tot===0?0.5:Math.max(0.55,Math.min(0.95,0.5+Math.abs(d-e)/tot*0.45+tot*0.02));
+    setCard("pol",tot===0?"Indeterminado":(dir?"Direita":"Esquerda"),tot===0?0.5:pPol,"#2f6fd0");
+    document.getElementById("pol-conf").textContent="confiança "+Math.round((tot===0?0.5:pPol)*100)+"% · heurística";
+  }
+  async function fetchJSON(url){
+    var ctrl=new AbortController();var to=setTimeout(function(){ctrl.abort();},2500);
+    var r=await fetch(url,{signal:ctrl.signal});clearTimeout(to);
+    if(!r.ok)throw 0; return r.json();
+  }
+  async function analisar(){
+    var raw=document.getElementById("txt").value||"";var s=norm(raw);
+    var nPal=raw.trim().split(/\s+/).filter(Boolean).length;var formal=nPal>=40;
+    // toxicidade: modelo real via API; senão heurística
+    try{
+      var rt=await fetchJSON(API+"/api/toxicidade?texto="+encodeURIComponent(raw));
+      setCard("tox",rt.toxico?"Tóxico":"Não-tóxico",rt.confianca,rt.toxico?"#c0392b":"#0f9d72");
+      document.getElementById("tox-conf").textContent="confiança "+Math.round(rt.confianca*100)+"% · modelo "+rt.modelo;
+    }catch(err){ heuristicaTox(s); }
+    // inclinação: modelo real via API (BERTimbau); senão heurística
+    try{
+      var rp=await fetchJSON(API+"/api/inclinacao?texto="+encodeURIComponent(raw));
+      setCard("pol",rp.direita?"Direita":"Esquerda",rp.confianca,"#2f6fd0");
+      document.getElementById("pol-conf").textContent="confiança "+Math.round(rp.confianca*100)+"% · modelo "+rp.modelo;
+    }catch(err){ heuristicaPol(s); }
+    fit("tox",!formal,formal?"Fora de registro — confie na inclinação":"Em registro: texto informal");
+    fit("pol",formal,!formal?"Fora de registro — confie na toxicidade":"Em registro: texto formal");
+  }
+  document.getElementById("go").addEventListener("click",analisar);
+  document.getElementById("clr").addEventListener("click",function(){document.getElementById("txt").value="";document.getElementById("tox-label").textContent="—";document.getElementById("pol-label").textContent="—";["tox","pol"].forEach(function(id){document.getElementById(id+"-bar").style.width="0";document.getElementById(id+"-conf").textContent="aguardando análise";document.getElementById(id+"-fit").style.display="none";});});
+  document.getElementById("ex1").addEventListener("click",function(){document.getElementById("txt").value="esse deputado é um vagabundo corrupto, devia calar a boca seu verme";analisar();});
+  document.getElementById("ex2").addEventListener("click",function(){document.getElementById("txt").value="Senhor presidente, reafirmo o compromisso desta Casa com os direitos do trabalhador e com o fortalecimento da saúde pública e da assistência social, porque é dever do Estado reduzir a desigualdade e garantir dignidade ao nosso povo, ampliando o acesso aos serviços públicos essenciais a todos os brasileiros e defendendo a democracia.";analisar();});
+
+  var nav=document.getElementById("nav");
+  window.addEventListener("scroll",function(){nav.classList.toggle("scrolled",window.scrollY>8);});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add("in");});},{threshold:.12});
+  document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+
+  // verifica se o servidor de modelos está no ar e, se estiver, faz um auto-teste
+  var stEl=document.getElementById("status-modelo");
+  fetch(API+"/api/health").then(function(r){return r.json();}).then(function(h){
+    if(h && h.toxicidade){
+      stEl.innerHTML='<span style="display:inline-flex;align-items:center;gap:7px;background:#e7f7f1;color:var(--ok-ink);padding:5px 12px;border-radius:99px;font-weight:500;"><span style="width:8px;height:8px;border-radius:50%;background:var(--ok);"></span>Modelo real conectado · toxicidade: '+h.toxicidade+(h.inclinacao?' · inclinação: '+h.inclinacao:' · inclinação: heurística')+'</span>';
+      document.getElementById("txt").value="esse deputado é um vagabundo corrupto, devia calar a boca";
+      analisar();
+    }
+  }).catch(function(){
+    stEl.innerHTML='<span style="display:inline-flex;align-items:center;gap:7px;background:#fbf1de;color:var(--warn);padding:5px 12px;border-radius:99px;font-weight:500;"><span style="width:8px;height:8px;border-radius:50%;background:var(--warn);"></span>Servidor offline — usando heurística. Rode \"python app.py\" para ativar os modelos reais.</span>';
+  });
+})();
+</script>
+</body>
+</html>

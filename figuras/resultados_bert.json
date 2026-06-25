@@ -1,0 +1,22 @@
+{
+  "modelo": "pablocosta/bertabaporu-base-uncased",
+  "macro_f1": 0.7663,
+  "roc_auc": 0.872,
+  "accuracy": 0.8517,
+  "prec_tox": 0.6117,
+  "rec_tox": 0.6391,
+  "f1_tox": 0.6251,
+  "prec_nao": 0.9125,
+  "rec_nao": 0.9027,
+  "f1_nao": 0.9076,
+  "cm": [
+    [
+      2273,
+      245
+    ],
+    [
+      218,
+      386
+    ]
+  ]
+}

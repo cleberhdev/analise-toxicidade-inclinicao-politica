@@ -1,0 +1,18 @@
+{
+  "modelo": "neuralmind/bert-base-portuguese-cased",
+  "macro_f1": 0.7286,
+  "roc_auc": 0.8361,
+  "accuracy": 0.7316,
+  "f1_esq": 0.7,
+  "f1_dir": 0.7572,
+  "cm": [
+    [
+      98,
+      29
+    ],
+    [
+      55,
+      131
+    ]
+  ]
+}

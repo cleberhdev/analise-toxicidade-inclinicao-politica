@@ -1,0 +1,31 @@
+# ===== Itens que NAO devem ir para o GitHub =====
+
+# Ambiente virtual (recriado pelo Iniciar_demo.bat) - pesado
+.venv/
+venv/
+
+# Modelo do BERTimbau (>100 MB, excede o limite do GitHub)
+# Baixe do Colab conforme o README (treinar_bertimbau_colab.ipynb)
+modelo_bertimbau_politica/
+*.zip
+
+# Logs e temporarios
+srv.log
+*.log
+~$*
+diag*.txt
+diag2.txt
+api_result.txt
+venv_setup.log
+venv_ready.txt
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Regra de IA do VSCode (mantida do .gitignore original)
+.github\instructions\codacy.instructions.md

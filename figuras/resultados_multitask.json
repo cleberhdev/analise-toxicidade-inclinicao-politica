@@ -1,0 +1,9 @@
+{
+  "single_tox": 0.6953,
+  "single_pol": 0.7283,
+  "multi_tox": 0.6761,
+  "multi_pol": 0.7682,
+  "delta_tox": -0.0192,
+  "delta_pol": 0.0399,
+  "encoder": "neuralmind/bert-base-portuguese-cased"
+}

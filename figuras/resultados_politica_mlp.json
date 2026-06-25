@@ -1,0 +1,18 @@
+{
+  "modelo": "TF-IDF+SVD+MLP (texto limpo, balanceado)",
+  "macro_f1": 0.7796,
+  "roc_auc": 0.8551,
+  "accuracy": 0.7891,
+  "f1_esq": 0.7339,
+  "f1_dir": 0.8254,
+  "cm": [
+    [
+      91,
+      36
+    ],
+    [
+      30,
+      156
+    ]
+  ]
+}

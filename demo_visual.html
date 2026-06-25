@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo — Toxicidade e Inclinação Política</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/2.47.0/tabler-icons.min.css">
+<style>
+  :root{
+    --bg0:#ffffff; --bg1:#f6f5f1; --bg2:#ecebe4;
+    --tx0:#1f1f1d; --tx1:#5f5e5a; --tx2:#8a8980;
+    --ok:#0F6E56; --warn:#854F0B; --bd:rgba(0,0,0,.14);
+    --radius:12px; --radius-sm:8px;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  body{ max-width:720px; margin:24px auto; padding:0 16px; color:var(--tx0); background:#fafaf7; }
+  h1{ font-size:20px; font-weight:500; }
+  p.sub{ color:var(--tx1); font-size:14px; line-height:1.6; }
+  textarea{ width:100%; resize:vertical; font:inherit; padding:8px 10px; border:0.5px solid var(--bd); border-radius:var(--radius-sm); box-sizing:border-box; }
+  button{ font:inherit; font-size:13px; background:transparent; border:0.5px solid var(--bd); border-radius:var(--radius-sm); padding:7px 12px; cursor:pointer; }
+  button:hover{ background:var(--bg2); }
+  .panel{ background:var(--bg1); border-radius:var(--radius); padding:16px 20px; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(0,1fr)); gap:12px; margin-top:12px; }
+  .card{ background:var(--bg0); border:0.5px solid var(--bd); border-radius:var(--radius); padding:16px 20px; }
+  .bar{ height:8px; background:var(--bg2); border-radius:99px; overflow:hidden; }
+  .bar > div{ height:100%; width:0%; background:var(--tx1); transition:width .25s; }
+  .lbl{ font-size:20px; font-weight:500; margin:6px 0; }
+  .muted{ font-size:13px; color:var(--tx1); margin:6px 0 0; }
+  .head{ display:flex; align-items:center; gap:8px; margin-bottom:4px; font-size:14px; font-weight:500; }
+  .reg{ font-size:11px; color:var(--tx2); margin-left:auto; }
+  .note{ font-size:12px; color:var(--tx2); line-height:1.6; margin-top:12px; }
+</style>
+</head>
+<body>
+  <h1>Toxicidade &amp; inclinação política — demonstração</h1>
+  <p class="sub">Cole um texto: a frente de toxicidade vale para registro informal (tweets); a de inclinação, para registro formal (discursos). O aviso de registro mostra qual frente é confiável para o texto dado.</p>
+
+  <div class="panel">
+    <label for="txt" style="font-size:14px; color:var(--tx1); display:block; margin-bottom:8px;">Texto em português</label>
+    <textarea id="txt" rows="4" placeholder="Cole um tweet ou um trecho de discurso..."></textarea>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;">
+      <button id="ex1">Exemplo: tweet</button>
+      <button id="ex2">Exemplo: discurso</button>
+      <button id="go" style="margin-left:auto;"><i class="ti ti-player-play"></i> Analisar</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="head"><i class="ti ti-message-report"></i> Toxicidade <span class="reg">registro informal</span></div>
+      <p class="lbl" id="tox-label">—</p>
+      <div class="bar"><div id="tox-bar"></div></div>
+      <p class="muted" id="tox-conf">aguardando análise</p>
+      <p class="muted" id="tox-fit" style="font-size:12px;"></p>
+    </div>
+    <div class="card">
+      <div class="head"><i class="ti ti-building-bank"></i> Inclinação ideológica <span class="reg">registro formal</span></div>
+      <p class="lbl" id="pol-label">—</p>
+      <div class="bar"><div id="pol-bar"></div></div>
+      <p class="muted" id="pol-conf">aguardando análise</p>
+      <p class="muted" id="pol-fit" style="font-size:12px;"></p>
+    </div>
+  </div>
+
+  <p class="note"><i class="ti ti-info-circle"></i> Demonstração ilustrativa da interface. As predições reais vêm dos modelos BERT treinados pelo pipeline.py; aqui usa-se uma heurística leve só para mostrar o fluxo e o aviso de registro.</p>
+
+<script>
+(function(){
+  var TOX=["idiota","lixo","imbecil","otario","otário","burro","burra","vagabundo","merda","porra","escoria","escória","nojento","nojenta","ridiculo","ridículo","palhaco","palhaço","corrupto","ladrao","ladrão","cala","boca","seu lixo","bando de"];
+  var ESQ=["trabalhador","trabalhadores","direitos","povo","social","desigualdade","publico","público","sus","democracia","minorias","assistencia","assistência","auxilio","auxílio","redistribui"];
+  var DIR=["liberdade","familia","família","propriedade","imposto","impostos","privado","privatiza","ordem","mercado","tradicao","tradição","empreendedor","seguranca","segurança","estado minimo","estado inutil","estado inútil","livre mercado","patria","pátria","esquerdopata","esquerdopatas","comunista","comunistas","petralha","petralhas","mamata","parasita","parasitas","bandido","bandidos","vagabundo","vagabundos","roubar","rouba","roubam","inchar","cidadao de bem","cidadão de bem"];
+  function norm(s){return (s||"").toLowerCase();}
+  function count(s,a){var n=0;a.forEach(function(w){if(s.indexOf(w)>=0)n++;});return n;}
+  function setCard(id,label,conf,color){
+    document.getElementById(id+"-label").textContent=label;
+    var b=document.getElementById(id+"-bar");b.style.width=Math.round(conf*100)+"%";b.style.background=color;
+    document.getElementById(id+"-conf").textContent="confiança "+Math.round(conf*100)+"%";
+  }
+  function fit(id,ok,msg){var el=document.getElementById(id+"-fit");el.textContent=msg;el.style.color=ok?"var(--ok)":"var(--warn)";}
+  function analisar(){
+    var raw=document.getElementById("txt").value||"";var s=norm(raw);
+    var nPal=raw.trim().split(/\s+/).filter(Boolean).length;var formal=nPal>=40;
+    var tox=count(s,TOX);var pTox=Math.max(0.5,Math.min(0.97,0.5+tox*0.13));var ehTox=tox>0;
+    setCard("tox",ehTox?"Tóxico":"Não-tóxico",ehTox?pTox:(1-(pTox-0.5)),ehTox?"#A32D2D":"#0F6E56");
+    var e=count(s,ESQ),d=count(s,DIR),tot=e+d;var dir=d>=e;
+    var pPol=tot===0?0.5:Math.max(0.55,Math.min(0.95,0.5+Math.abs(d-e)/tot*0.45+tot*0.02));
+    setCard("pol",tot===0?"Indeterminado":(dir?"Direita":"Esquerda"),tot===0?0.5:pPol,"#185FA5");
+    fit("tox",!formal,formal?"Fora de registro: texto longo/formal — confie na inclinação.":"Em registro: texto curto/informal.");
+    fit("pol",formal,!formal?"Fora de registro: texto curto/informal — confie na toxicidade.":"Em registro: texto longo/formal.");
+  }
+  document.getElementById("go").addEventListener("click",analisar);
+  document.getElementById("ex1").addEventListener("click",function(){document.getElementById("txt").value="esse deputado é um vagabundo corrupto, devia calar a boca";analisar();});
+  document.getElementById("ex2").addEventListener("click",function(){document.getElementById("txt").value="Senhor presidente, reafirmo o compromisso desta Casa com os direitos do trabalhador e com o fortalecimento da saúde pública e da assistência social, porque é dever do Estado reduzir a desigualdade e garantir dignidade ao nosso povo, ampliando o acesso aos serviços públicos essenciais a todos os brasileiros.";analisar();});
+})();
+</script>
+</body>
+</html>

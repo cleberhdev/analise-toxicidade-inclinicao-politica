@@ -1,0 +1,7 @@
+flask
+flask-cors
+scikit-learn
+joblib
+# Para servir o BERT (opcional, se usar a pasta modelo_bert_toxicidade):
+# torch
+# transformers

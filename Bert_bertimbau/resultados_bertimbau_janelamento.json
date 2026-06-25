@@ -1,0 +1,15 @@
+{
+  "modelo": "neuralmind/bert-base-portuguese-cased + janelamento",
+  "macro_f1": 0.766,
+  "roc_auc": 0.8697,
+  "cm": [
+    [
+      111,
+      16
+    ],
+    [
+      57,
+      129
+    ]
+  ]
+}
