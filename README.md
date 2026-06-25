@@ -24,6 +24,24 @@ Para encerrar: feche a janela "Servidor de Modelos".
 
 ---
 
+## 📚 Os documentos deste projeto (qual ler)
+
+A documentação está em três níveis, com papéis distintos e complementares:
+
+- **`README.md`** (este arquivo): a porta de entrada. Como rodar a página, como retreinar os
+  modelos, o que é cada arquivo e por onde dar continuidade ao trabalho.
+- **`etapas/`** (7 markdowns): o raciocínio acadêmico, na ordem do roteiro da disciplina (problema,
+  objetivo, base de dados, modelagem, avaliação, aplicabilidade, demonstração). É onde estão as
+  justificativas, as hipóteses e as fontes.
+- **`DOCUMENTACAO_TECNICA.docx`**: o relatório consolidado e ilustrado (figuras e tabelas). Reúne as
+  7 etapas em um só documento e acrescenta o histórico de decisões (Seção 8), os entregáveis e a
+  execução (Seção 9) e a conclusão (Seção 10).
+
+Em resumo: comece pelo **README** para *usar*; vá às **`etapas/`** para entender o *porquê* de cada
+decisão; abra a **DOCX** para o *relatório final completo*.
+
+---
+
 ## 1. Objetivo do projeto
 
 1. **Classificar toxicidade** em texto informal (tóxico / não-tóxico);
