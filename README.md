@@ -9,7 +9,7 @@ toxicidade no discurso **cidadão/informal** (tweets) e inclinação ideológica
 
 ---
 
-## Início rápido (rodar a página em 4 passos)
+## ▶ Início rápido (rodar a página em 4 passos)
 
 > Pré-requisito: **Python 3** instalado no Windows. (Detalhes completos na Seção 3.)
 
@@ -124,7 +124,7 @@ python treinar_rede_neural.py
 Saída: o modelo `.joblib`, as figuras (curva de loss, matriz de confusão) e as métricas.
 As versões usadas no desenvolvimento estão fixadas em **`requirements_treino.txt`** (Python 3.13), use-o para reproduzir o mesmo ambiente.
 
-> **Artefatos pesados não estão versionados.** Por ultrapassarem o limite de 100 MB do GitHub,
+> ⚠️ **Artefatos pesados não estão versionados.** Por ultrapassarem o limite de 100 MB do GitHub,
 > a pasta `modelo_bertimbau_politica/` (e o `.zip` correspondente, com os pesos `model.safetensors`)
 > estão no `.gitignore` e **não vêm no clone**. Para recriá-los, rode o notebook
 > `treinar_bertimbau_colab.ipynb` no Colab (a última célula baixa o `.zip`) e descompacte-o ao lado
@@ -256,4 +256,6 @@ numpy; matplotlib; Flask (servidor da página); HTML/CSS/JavaScript (página web
 
 ## 7. Ética e uso responsável
 
-Ferramenta de a
+Ferramenta de apoio com **humano no circuito**, análise em **nível agregado**, e cada modelo
+aplicado **apenas ao registro** para o qual foi treinado. O modelo de inclinação opera sobre
+**discurso público de agentes públicos**, nunca inferindo ideologia de cidadãos.
