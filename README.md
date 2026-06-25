@@ -13,7 +13,7 @@ toxicidade no discurso **cidadão/informal** (tweets) e inclinação ideológica
 
 > Pré-requisito: **Python 3** instalado no Windows. (Detalhes completos na Seção 3.)
 
-1. Abra a pasta `Trabalho_Robson` e dê **duplo-clique em `Iniciar_demo.bat`**
+1. Abra a pasta `analise-toxicidade-inclinicao-politica` e dê **duplo-clique em `Iniciar_demo.bat`**
    (na 1ª vez ele cria o ambiente e instala as dependências — alguns minutos).
 2. Vão abrir a janela **"Servidor de Modelos (NAO FECHE)"** e a página no Chrome. **Deixe a janela do servidor aberta.**
 3. Na página, **role até "Analisador"**; deve aparecer o selo verde **"Modelo real conectado"**.
@@ -76,7 +76,7 @@ servidor local (`app.py`). O atalho `Iniciar_demo.bat` cuida de tudo.
 - **Python 3** instalado no Windows (o projeto foi testado com Python 3.13).
 
 ### Passos
-1. Abra a pasta `Trabalho_Robson`.
+1. Abra a pasta `analise-toxicidade-inclinicao-politica`.
 2. Dê **duplo-clique em `Iniciar_demo.bat`**. Na **primeira vez** ele cria um ambiente virtual
    isolado (`.venv`) e instala as dependências (flask, scikit-learn, joblib) — leva alguns minutos.
    Nas próximas vezes é quase imediato.
@@ -93,7 +93,7 @@ Por padrão a inclinação usa uma heurística. Para usar o modelo real:
 
 1. Rode o notebook **`treinar_bertimbau_colab.ipynb`** no Google Colab (com GPU). A última célula
    gera e baixa `modelo_bertimbau_politica.zip`.
-2. **Descompacte** o zip dentro de `Trabalho_Robson`, de modo a ficar a pasta
+2. **Descompacte** o zip dentro de `analise-toxicidade-inclinicao-politica`, de modo a ficar a pasta
    `modelo_bertimbau_politica` ao lado do `app.py`.
 3. Instale Torch e Transformers no ambiente (download grande, ~2 GB):
    ```
@@ -108,13 +108,47 @@ Por padrão a inclinação usa uma heurística. Para usar o modelo real:
 
 ---
 
+## Como (re)treinar os modelos (reprodutibilidade)
+
+Todos os modelos são reprodutíveis. A rede neural de toxicidade treina localmente (CPU); os
+modelos **BERT/BERTimbau** treinam no **Google Colab** com GPU gratuita.
+
+### Rede neural de toxicidade (local) → gera `modelo_rede_neural.joblib`
+
+```bash
+git clone https://github.com/JAugusto97/ToLD-Br.git
+pip install scikit-learn pandas numpy matplotlib joblib
+python treinar_rede_neural.py
+```
+
+Saída: o modelo `.joblib`, as figuras (curva de loss, matriz de confusão) e as métricas.
+
+### Modelos BERT (Google Colab, GPU) — os mesmos 4 passos para os 4 notebooks
+
+1. Abra o notebook no [Google Colab](https://colab.research.google.com).
+2. `Ambiente de execução → Alterar o tipo de ambiente de execução → GPU`.
+3. `Ambiente de execução → Executar tudo`.
+4. As células finais **baixam os resultados** (figuras, JSONs e, no BERTimbau, o `.zip` do modelo).
+
+| Notebook | Treina | Saída principal |
+|---|---|---|
+| `treinar_bert_colab.ipynb` | BERT (BERTabaporu) — toxicidade | métricas + figuras |
+| `treinar_bertimbau_colab.ipynb` | BERTimbau — inclinação (coleta + treina) | `modelo_bertimbau_politica.zip` (usado pela página) |
+| `treinar_bertimbau_janelamento_colab.ipynb` | BERTimbau + janelamento | métricas + figuras |
+| `treinar_multitask_colab.ipynb` | Multi-task (encoder compartilhado) | comparação single vs multi |
+
+Reprodutibilidade garantida: sementes fixas, *splits* documentados (split por deputado na
+inclinação) e limpeza de texto (remoção do cabeçalho com a sigla do partido).
+
+---
+
 ## 4. Estrutura de arquivos (o que é cada coisa)
 
 ### Documentação
 | Arquivo | O que é |
 |---|---|
 | `DOCUMENTACAO_TECNICA.docx` | Documentação técnica completa (7 etapas + resultados + histórico) |
-| `README.md` | Este guia (resumo, execução, arquivos, notebooks) |
+| `README.md` | Este guia (resumo, execução, treino, arquivos, notebooks) |
 | `etapas/` | As 7 etapas detalhadas, uma a uma, em markdown |
 
 ### Demonstração (página web e API)
@@ -148,9 +182,9 @@ Por padrão a inclinação usa uma heurística. Para usar o modelo real:
 | Notebook | O que treina |
 |---|---|
 | `treinar_bert_colab.ipynb` | **BERT (BERTabaporu)** para **toxicidade** — baixa o ToLD-Br, treina, avalia e salva |
-| `treinar_bertimbau_colab.ipynb` | **BERTimbau** para **inclinação** (versão truncada em 256 tokens) — coleta os discursos da Câmara, limpa, treina e **salva a pasta `modelo_bertimbau_politica`** usada pela página |
-| `treinar_bertimbau_janelamento_colab.ipynb` | **BERTimbau + janelamento** — mesma frente, mas lê o **documento inteiro** (fatiando em janelas); é a versão que recupera o desempenho (0,77) |
-| `treinar_multitask_colab.ipynb` | **Multi-task** — um encoder compartilhado com duas cabeças; compara single-task vs multi-task para testar a transferência entre registros (H2/H3) |
+| `treinar_bertimbau_colab.ipynb` | **BERTimbau** para **inclinação** (truncado em 256 tokens) — coleta os discursos da Câmara, limpa, treina e **salva a pasta `modelo_bertimbau_politica`** usada pela página |
+| `treinar_bertimbau_janelamento_colab.ipynb` | **BERTimbau + janelamento** — lê o **documento inteiro** (fatiando em janelas); recupera o desempenho (0,77) |
+| `treinar_multitask_colab.ipynb` | **Multi-task** — um encoder compartilhado com duas cabeças; compara single-task vs multi-task (H2/H3) |
 
 > Para a **página web**, o notebook relevante é o `treinar_bertimbau_colab.ipynb`, pois é ele que
 > gera a pasta com o nome exato (`modelo_bertimbau_politica`) que o `app.py` carrega.
@@ -162,4 +196,20 @@ Por padrão a inclinação usa uma heurística. Para usar o modelo real:
 | Base | Frente | Origem | Licença |
 |---|---|---|---|
 | **ToLD-Br** | Toxicidade | [github.com/JAugusto97/ToLD-Br](https://github.com/JAugusto97/ToLD-Br) | CC BY-SA 4.0 |
-| **Discursos da Câmara** | Inclinação | [dadosabertos.camara.leg
+| **Discursos da Câmara** | Inclinação | [dadosabertos.camara.leg.br](https://dadosabertos.camara.leg.br) | Dados públicos |
+
+> O UStanceBR (proposta inicial) foi descartado por ser distribuído só como IDs de tweets, sem
+> texto — inviável de reidratar de forma reprodutível. Detalhes na Seção 3 da documentação.
+
+---
+
+## 6. Tecnologias
+
+Python 3; PyTorch + Hugging Face Transformers (BERTimbau, BERTabaporu); scikit-learn; pandas;
+numpy; matplotlib; Flask (servidor da página); HTML/CSS/JavaScript (página web).
+
+## 7. Ética e uso responsável
+
+Ferramenta de apoio com **humano no circuito**, análise em **nível agregado**, e cada modelo
+aplicado **apenas ao registro** para o qual foi treinado. O modelo de inclinação opera sobre
+**discurso público de agentes públicos**, nunca inferindo ideologia de cidadãos.
